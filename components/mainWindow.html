@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link
+			rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+			integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="../assets/css/styles.css" />
+		<title>Le chronomètre officiel du DGI</title>
+		<style>
+			.titleBox {
+				-webkit-user-select: none;
+				-webkit-app-region: drag;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<div class="logoBox"></div>
+			<div class="chienBg"></div>
+			<div class="titleBox">
+				<h1 class="title">
+					Le chronomètre officiel du défi
+				</h1>
+			</div>
+			<div class="chronoContainer">
+				<div class="time">
+					<p></p>
+				</div>
+				<div class="controles">
+					<div class="controles-btn" id="ctrl-reset">
+						<i class="fas fa-history"></i>
+					</div>
+					<div class="controles-btn hide" id="ctrl-pause">
+						<i class="fas fa-pause-circle"></i>
+					</div>
+					<div class="controles-btn" id="ctrl-start">
+						<i class="fas fa-play-circle"></i>
+					</div>
+				</div>
+			</div>
+		</main>
+		<!-- SCRIPTS -->
+		<script>
+			const {ipcRenderer} = require("electron");
+			const Chrono = require("../assets/js/chrono");
+			Chrono.initCounter();
+
+			//SAVE ELEMENTS
+			const timeBlock = document.querySelector(".time p");
+			const chronoContainer = document.querySelector(".chronoContainer");
+			const ctrls = document.querySelectorAll(".controles-btn");
+			const startBtn = document.querySelector("#ctrl-start");
+			const resetBtn = document.querySelector("#ctrl-reset");
+			const pauseBtn = document.querySelector("#ctrl-pause");
+
+			//ELEMENTS LISTENERS
+			startBtn.addEventListener("animationstart", e => {
+				startBtn.addEventListener("animationend", e => {
+					startBtn.classList.remove("animate");
+					startBtn.classList.add("hide");
+					pauseBtn.classList.remove("hide", "animate");
+				});
+			});
+
+			pauseBtn.addEventListener("animationstart", e => {
+				pauseBtn.addEventListener("animationend", e => {
+					pauseBtn.classList.remove("animate");
+					pauseBtn.classList.add("hide");
+					startBtn.classList.remove("hide", "animate");
+				});
+			});
+
+			resetBtn.addEventListener("animationstart", e => {
+				resetBtn.addEventListener("animationend", e => {
+					resetBtn.classList.remove("animate");
+					pauseBtn.classList.add("hide");
+					startBtn.classList.remove("hide", "animate");
+				});
+			});
+
+			startBtn.addEventListener("click", () => {
+				startBtn.classList.add("animate");
+				Chrono.startCounter();
+			});
+
+			pauseBtn.addEventListener("click", () => {
+				pauseBtn.classList.add("animate");
+				Chrono.stopCounter();
+			});
+
+			resetBtn.addEventListener("click", () => {
+				chronoContainer.classList.remove("animate");
+				resetBtn.classList.add("animate");
+				Chrono.resetCounter();
+			});
+
+			//GLOBAL EVENTS
+			ipcRenderer.on("chrono:set-time", (e, time) => {
+				if (time <= 5) {
+					chronoContainer.classList.add("animate");
+				}
+				timeBlock.innerText = time + " s";
+			});
+			ipcRenderer.on("chrono:time-ended", (e, time) => {
+				startBtn.classList.remove("hide", "animate");
+				pauseBtn.classList.add("hide");
+				chronoContainer.classList.remove("animate");
+				timeBlock.innerText = "TERMINÉ!";
+			});
+
+			ipcRenderer.on("chrono:edit-time", (e, newTime) => {
+				Chrono.state.duration = newTime.values;
+				Chrono.setDurationIndex(0);
+				chronoContainer.classList.remove("animate");
+				Chrono.resetCounter();
+			});
+
+			ipcRenderer.on("controls:toggle", e => {
+				if (!Chrono.state.isCounting) {
+					startBtn.click();
+				} else {
+					pauseBtn.click();
+				}
+			});
+
+			ipcRenderer.on("controls:switchIndex", (e, index) => {
+				if (index <= Chrono.state.duration.length) {
+					Chrono.setDurationIndex(index - 1);
+					chronoContainer.classList.remove("animate");
+				}
+			});
+
+			ipcRenderer.on("controls:reset", (e, time) => {
+				resetBtn.click();
+			});
+		</script>
+		<script
+			src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
