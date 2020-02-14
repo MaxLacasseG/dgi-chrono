@@ -1,292 +1,462 @@
 @font-face {
-    font-family: "cafeteria";
-    src: url("../fonts/cafeteria-black-webfont.woff") format("woff"),
-        url("../fonts/cafeteria-black-webfont.ttf") format("opentype"),
+  font-family: 'cafeteria';
+  src: url('../fonts/cafeteria-black-webfont.woff') format('woff'),
+    url('../fonts/cafeteria-black-webfont.ttf') format('opentype');
 }
 
-$mainFont:"cafeteria";
-$mainColor:rgb(30, 111, 156);
-$mainColorTrans:rgba(30, 111, 156, 0.75);
+$mainFont: 'cafeteria';
+$mainColor: rgb(30, 111, 156);
+$mainColorTrans: rgba(30, 111, 156, 0.75);
 
-$secondaryColor:#5fbfb7;
-$tertiaryColor:rgb(200, 207, 62);
-$fourthColor:rgb(228, 42, 48);
-$fifthColor:rgb(238, 91, 47);
+$secondaryColor: #5fbfb7;
+$tertiaryColor: rgb(200, 207, 62);
+$fourthColor: rgb(228, 42, 48);
+$fifthColor: rgb(238, 91, 47);
 
 @keyframes btnAnimation {
-    0% {
-        background-color: $secondaryColor;
-        box-shadow: 2px 2px 5px $mainColorTrans, 3px 3px 5px $mainColorTrans;
-        transform: translate(0, 0) scale(1, 1);
-    }
+  0% {
+    background-color: $secondaryColor;
+    box-shadow: 2px 2px 5px $mainColorTrans, 3px 3px 5px $mainColorTrans;
+    transform: translate(0, 0) scale(1, 1);
+  }
 
-    40% {
-        background-color: $secondaryColor;
-        box-shadow: 2px 2px 5px $mainColorTrans, 3px 3px 5px $mainColorTrans;
-        transform: translate(0, 0) scale(1, 1);
-    }
+  40% {
+    background-color: $secondaryColor;
+    box-shadow: 2px 2px 5px $mainColorTrans, 3px 3px 5px $mainColorTrans;
+    transform: translate(0, 0) scale(1, 1);
+  }
 
+  50% {
+    background-color: $fifthColor;
+    box-shadow: 2px 2px 8px $mainColor;
+    transform: translate(0, 0) scale(1, 1);
+  }
 
-    50% {
-        background-color: $fifthColor;
-        box-shadow: 2px 2px 8px $mainColor;
-        transform: translate(0, 0) scale(1, 1);
-    }
+  70% {
+    background-color: $fifthColor;
+    box-shadow: 2px 2px 8px $mainColor;
+    transform: translate(0, 0) scale(1, 1);
+  }
 
-    70% {
-        background-color: $fifthColor;
-        box-shadow: 2px 2px 8px $mainColor;
-        transform: translate(0, 0) scale(1, 1);
-    }
+  80% {
+    background-color: $tertiaryColor;
+    box-shadow: 2px 2px 8px $mainColor;
+    transform: translate(-5px, 5px) scale(0.95, 0.95);
+  }
 
-    80% {
-        background-color: $tertiaryColor;
-        box-shadow: 2px 2px 8px $mainColor;
-        transform: translate(-5px, 5px) scale(0.95, 0.95);
-    }
-
-    100% {
-        background-color: $tertiaryColor;
-        box-shadow: 2px 2px 8px $mainColor;
-        transform: translate(-5px, 5px) scale(0.95, 0.95);
-    }
+  100% {
+    background-color: $tertiaryColor;
+    box-shadow: 2px 2px 8px $mainColor;
+    transform: translate(-5px, 5px) scale(0.95, 0.95);
+  }
 }
 
 @keyframes bgRed {
-    0% {
-        box-shadow: none;
-        background-color: transparent;
-    }
+  0% {
+    box-shadow: none;
+    background-color: transparent;
+  }
 
-    100% {
-        box-shadow: inset 0 0 50px red, 0 0 50px red;
-        background-color: rgba($color: red, $alpha: 0.3);
-
-    }
+  100% {
+    box-shadow: inset 0 0 50px red, 0 0 50px red;
+    background-color: rgba($color: red, $alpha: 0.3);
+  }
 }
 
 html,
 body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    -webkit-app-region: drag;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  -webkit-app-region: drag;
 
-    -webkit-scrollbar {
-        display: none;
-    }
+  -webkit-scrollbar {
+    display: none;
+  }
 }
 
 main {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+
+  & .edit-time-sequences {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    font-family: $mainFont;
+    color: white;
+
+    & .form-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & label {
+        font-size: 2em;
+      }
+
+      & input[type='radio'] {
+        margin-right: 2em;
+        margin-left: 0.5em;
+        font-size: 3em;
+      }
+    }
+  }
+
+  & .edit-time-form {
+    flex: 1;
+    min-height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & .form-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.hidden {
+        display: none;
+      }
+
+      & div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .time-input {
+          width: 70%;
+          font-size: 8rem;
+          font-family: $mainFont;
+          color: $mainColor;
+          text-align: center;
+          box-shadow: 2px 2px 5px $mainColorTrans, 3px 3px 5px $mainColorTrans;
+
+          &:focus {
+            border-color: rgba($color: $tertiaryColor, $alpha: 0.3);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset,
+              0 0 8px rgba($color: $mainColor, $alpha: 0.3);
+            outline: 0 none;
+          }
+        }
+
+        label {
+          font-size: 5rem;
+          font-family: $mainFont;
+          color: white;
+        }
+      }
+    }
+
+    .btn {
+      min-height: 10%;
+      width: 50%;
+      font-size: 3rem;
+      font-family: $mainFont;
+      background-color: $fifthColor;
+      border-radius: 20px;
+      color: white;
+    }
+  }
+
+  & .titleBox {
+    width: 100%;
+    padding: 1rem 0;
+    background: linear-gradient($secondaryColor, $secondaryColor);
+    border-bottom: 10px solid $fifthColor;
+    box-shadow: 5px 5px 5px $mainColorTrans, inset 0 0 10px $mainColorTrans;
+
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    text-align: center;
+
+    .title {
+      font-size: 6rem;
+      font-family: $mainFont;
+      text-align: center;
+
+      @media screen and (max-width: 1500px) {
+        font-size: 3rem;
+        padding: 0;
+      }
+      @media screen and (max-width: 1200px) {
+        font-size: 2rem;
+        padding: 0;
+      }
+    }
+  }
+
+  .logoBox {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    background: linear-gradient(
+        rgba(30, 112, 156, 0.769),
+        rgba(34, 103, 140, 0.701)
+      ),
+      url('../images/logo.png'),
+      linear-gradient(rgba(30, 112, 156, 0.591), rgba(34, 103, 140, 0.516));
+    background-repeat: no-repeat, no-repeat;
+    background-position: center center, center center, center center;
+    backface-visibility: hidden, hidden, hidden;
+    z-index: -1000;
+  }
+
+  .chienBg {
+    position: fixed;
+    height: 50%;
+    width: 20%;
+    right: 2%;
+    bottom: 2%;
+    background-image: url('../images/chienBg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    z-index: -500;
+  }
+
+  .chronoContainer {
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: stretch;
 
-    & .edit-time-sequences {
+    &.animate {
+      animation: bgRed 500ms cubic-bezier(0.66, 0.07, 0.23, 0.92) infinite
+        alternate both;
+    }
+
+    .time {
+      align-self: center;
+      font-size: 25rem;
+      color: white;
+      text-shadow: 3px 3px 2px $mainColor, 3px 3px darken($mainColor, 3%),
+        4px 4px darken($mainColor, 6%), 6px 6px darken($mainColor, 10%),
+        8px 8px 10px darken($mainColor, 13%);
+      font-family: $mainFont;
+      @media screen and (max-width: 1500px) {
+        font-size: 15rem;
+      }
+      @media screen and (max-width: 1200px) {
+        font-size: 10rem;
+      }
+    }
+
+    .controles {
+      padding-top: 2em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      transform: translate(0, -100px);
+      @media screen and (max-width: 1500px) {
+        margin-top: 2rem;
+      }
+      @media screen and (max-width: 1200px) {
+        margin-top: 5rem;
+      }
+      .controles-btn {
+        background-color: $secondaryColor;
+        border-radius: 100%;
+        box-shadow: 2px 2px 5px $mainColorTrans, 3px 3px 5px $mainColorTrans;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-family: $mainFont;
-        color: white;
+        transform: none;
+        transition: all 250ms;
+        padding: 2rem;
+        margin: 0 2rem;
 
-        & .form-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        &:hover {
+          background-color: $fifthColor;
+          box-shadow: 2px 2px 8px $mainColor;
+          cursor: pointer;
 
-            & label {
-                font-size: 2em;
-            }
-
-            & input[type="radio"] {
-                margin-right: 2em;
-                margin-left: 0.5em;
-            }
+          &:active {
+            background-color: $tertiaryColor;
+            transform: translate(-5px, 5px) scale(0.95, 0.95);
+          }
         }
 
-    }
-
-    & .edit-time-form {
-        flex: 1;
-        min-height: 80%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        & .form-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            &.hidden {
-                display: none;
-            }
-
-            & div {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-
-                .time-input {
-                    width: 70%;
-                    font-size: 8rem;
-                    font-family: $mainFont;
-                    color: $mainColor;
-                    text-align: center;
-                    box-shadow: 2px 2px 5px $mainColorTrans, 3px 3px 5px $mainColorTrans;
-
-                    &:focus {
-                        border-color: rgba($color: $tertiaryColor, $alpha: 0.3);
-                        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba($color: $mainColor, $alpha: 0.3);
-                        outline: 0 none;
-                    }
-                }
-
-                label {
-                    font-size: 5rem;
-                    font-family: $mainFont;
-                    color: white;
-                }
-            }
-
-
-
+        &.hide {
+          display: none;
         }
-
-
-
-
-
-        .btn {
-            min-height: 10%;
-            width: 50%;
-            font-size: 3rem;
-            font-family: $mainFont;
-            background-color: $fifthColor;
-            border-radius: 20px;
-            color: white;
-        }
-    }
-
-
-
-    & .titleBox {
-        width: 100%;
-        padding: 2rem 0;
-        background: linear-gradient($secondaryColor, $secondaryColor);
-        border-bottom: 10px solid $fifthColor;
-        box-shadow: 5px 5px 5px $mainColorTrans, inset 0 0 10px $mainColorTrans;
-
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        text-transform: uppercase;
-
-        .title {
-            font-size: 6rem;
-            font-family: $mainFont;
-        }
-    }
-
-    .logoBox {
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: 0;
-        background: linear-gradient(rgba(30, 112, 156, 0.769), rgba(34, 103, 140, 0.701)), url("../images/logo.png"), linear-gradient(rgba(30, 112, 156, 0.591), rgba(34, 103, 140, 0.516));
-        background-repeat: no-repeat, no-repeat;
-        background-position: center center, center center, center center;
-        backface-visibility: hidden, hidden, hidden;
-        z-index: -1000;
-
-    }
-
-    .chienBg {
-        position: fixed;
-        height: 50%;
-        width: 20%;
-        right: 2%;
-        bottom: 2%;
-        background-image: url("../images/chienBg.png");
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: bottom right;
-        z-index: -500;
-
-    }
-
-    .chronoContainer {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: stretch;
 
         &.animate {
-            animation: bgRed 500ms cubic-bezier(.66, .07, .23, .92) infinite alternate both;
+          animation: btnAnimation 300ms 0s ease-in-out backwards;
         }
 
-        .time {
-            align-self: center;
-            font-size: 25rem;
-            color: white;
-            text-shadow: 3px 3px 2px $mainColor, 3px 3px darken($mainColor, 3%), 4px 4px darken($mainColor, 6%), 6px 6px darken($mainColor, 10%), 8px 8px 10px darken($mainColor, 13%);
-            font-family: $mainFont;
+        & i {
+          color: white;
+          text-shadow: 2px 2px 2px $mainColorTrans, 3px 3px 5px $mainColorTrans;
+          font-size: 10rem;
+          @media screen and (max-width: 1500px) {
+            font-size: 8rem;
+          }
+          @media screen and (max-width: 1200px) {
+            font-size: 5rem;
+          }
         }
-
-        .controles {
-            padding-top: 2em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            transform: translate(0, -100px);
-
-            .controles-btn {
-                background-color: $secondaryColor;
-                border-radius: 100%;
-                box-shadow: 2px 2px 5px $mainColorTrans, 3px 3px 5px $mainColorTrans;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                transform: none;
-                transition: all 250ms;
-                padding: 2rem;
-                margin: 0 2rem;
-
-                &:hover {
-                    background-color: $fifthColor;
-                    box-shadow: 2px 2px 8px $mainColor;
-                    cursor: pointer;
-
-                    &:active {
-                        background-color: $tertiaryColor;
-                        transform: translate(-5px, 5px) scale(0.95, 0.95);
-                    }
-                }
-
-                &.hide {
-                    display: none;
-                }
-
-                &.animate {
-                    animation: btnAnimation 300ms 0s ease-in-out backwards;
-                }
-
-                & i {
-                    color: white;
-                    text-shadow: 2px 2px 2px $mainColorTrans, 3px 3px 5px $mainColorTrans;
-                    font-size: 10rem;
-
-
-                }
-            }
-        }
+      }
     }
+  }
+
+  .pointsContainer {
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+
+    .points {
+      align-self: center;
+      font-size: 20rem;
+      color: white;
+      margin-bottom: 0.1em;
+      text-shadow: 3px 3px 2px $mainColor, 3px 3px darken($mainColor, 3%),
+        4px 4px darken($mainColor, 6%), 6px 6px darken($mainColor, 10%),
+        8px 8px 10px darken($mainColor, 13%);
+      font-family: $mainFont;
+      @media screen and (max-width: 1500px) {
+        font-size: 15rem;
+      }
+      @media screen and (max-width: 1200px) {
+        font-size: 10rem;
+      }
+    }
+
+    .controles {
+      padding-top: 2em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      transform: translate(0, -100px);
+      @media screen and (max-width: 1500px) {
+        margin-top: 2em;
+      }
+      @media screen and (max-width: 1200px) {
+        margin-top: 3em;
+      }
+      .row {
+        display: flex;
+      }
+
+      .controles-btn {
+        background-color: $secondaryColor;
+        border-radius: 100%;
+        box-shadow: 2px 2px 5px $mainColorTrans, 3px 3px 5px $mainColorTrans;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: none;
+        transition: all 250ms;
+        padding: 2rem 2.2em;
+        margin: 0 2rem;
+
+        &:hover {
+          background-color: white;
+          color: $mainColor;
+          box-shadow: 2px 2px 8px $mainColor;
+          cursor: pointer;
+
+          &:active {
+            background-color: $tertiaryColor;
+            transform: translate(-5px, 5px) scale(0.95, 0.95);
+          }
+        }
+
+        & i {
+          color: white;
+          text-shadow: 2px 2px 2px $mainColorTrans, 3px 3px 5px $mainColorTrans;
+          font-size: 5rem;
+          @media screen and (max-width: 1500px) {
+            font-size: 4rem;
+          }
+          @media screen and (max-width: 1200px) {
+            font-size: 3rem;
+          }
+        }
+
+        &.green {
+          background-color: #68d743;
+          &:hover {
+            background-color: white;
+            color: #68d743;
+            box-shadow: 2px 2px 8px #68d743;
+            & i {
+              color: #68d743;
+              text-shadow: 2px 2px 2px $mainColorTrans,
+                3px 3px 5px $mainColorTrans;
+            }
+          }
+        }
+        &.blue {
+          background-color: #23b6f5;
+          &:hover {
+            background-color: white;
+            color: #23b6f5;
+            box-shadow: 2px 2px 8px #23b6f5;
+            & i {
+              color: #23b6f5;
+              text-shadow: 2px 2px 2px $mainColorTrans,
+                3px 3px 5px $mainColorTrans;
+            }
+          }
+        }
+        &.yellow {
+          background-color: #ded71a;
+          &:hover {
+            background-color: white;
+            color: #ded71a;
+            box-shadow: 2px 2px 8px #ded71a;
+            & i {
+              color: #ded71a;
+              text-shadow: 2px 2px 2px $mainColorTrans,
+                3px 3px 5px $mainColorTrans;
+            }
+          }
+        }
+        &.red {
+          background-color: #ed4441;
+          &:hover {
+            background-color: white;
+            color: #ed4441;
+            box-shadow: 2px 2px 8px #ed4441;
+
+            & i {
+              color: #ed4441;
+              text-shadow: 2px 2px 2px $mainColorTrans,
+                3px 3px 5px $mainColorTrans;
+            }
+          }
+        }
+
+        &.hide {
+          display: none;
+        }
+
+        &.animate {
+          animation: btnAnimation 300ms 0s ease-in-out backwards;
+        }
+      }
+    }
+  }
+  .main-container {
+    display: flex;
+  }
 }

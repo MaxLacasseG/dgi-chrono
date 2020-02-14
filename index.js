@@ -25,7 +25,8 @@ app.on ('ready', () => {
   });
   mainWindow.isMinimizable (true);
   mainWindow.isMaximizable (true);
-
+  //Pour voir la console
+  //mainWindow.webContents.openDevTools ();
   if (process.platform === 'darwin') {
     mainWindow.setFullScreen (true);
   }
@@ -57,6 +58,9 @@ app.on ('ready', () => {
   ipcMain.on ('chrono:update', (event, time) => {
     mainWindow.webContents.send ('chrono:set-time', time);
   });
+  ipcMain.on ('chrono:update-points', (event, points) => {
+    mainWindow.webContents.send ('chrono:set-points', points);
+  });
   ipcMain.on ('chrono:reset', (event, time) => {
     mainWindow.webContents.send ('chrono:set-time', time);
   });
@@ -77,28 +81,6 @@ app.on ('ready', () => {
     editTimeWindow.close ();
   });
 });
-
-function editTimer () {
-  const {width, height} = electron.screen.getPrimaryDisplay ().workAreaSize;
-  editTimeWindow = new BrowserWindow ({
-    height,
-    width,
-    alwaysOnTop: true,
-    webPreferences: {
-      nodeIntegration: true,
-    },
-  });
-  editTimeWindow.loadURL (
-    url.format ({
-      pathname: path.join (__dirname, 'components', 'editTimeWindow.html'),
-      protocol: 'file',
-      slashes: true,
-    })
-  );
-  editTimeWindow.on ('close', () => {
-    editTimeWindow = null;
-  });
-}
 
 const mainMenuTemplate = [
   {
@@ -135,24 +117,66 @@ const mainMenuTemplate = [
         },
       },
       {
-        label: 'Modifier le temps',
-        accelerator: 'E',
-        click () {
-          editTimer ();
-        },
-      },
-      {
-        label: 'Séquence 1',
+        label: 'Cycle 1',
         accelerator: '1',
         click () {
-          mainWindow.webContents.send ('controls:switchIndex', 1);
+          mainWindow.webContents.send ('controls:switchCycle', 1);
         },
       },
       {
-        label: 'Séquence 2',
+        label: 'Cycle 2',
         accelerator: '2',
         click () {
-          mainWindow.webContents.send ('controls:switchIndex', 2);
+          mainWindow.webContents.send ('controls:switchCycle', 2);
+        },
+      },
+      {
+        label: 'Son 1',
+        accelerator: '3',
+        click () {
+          mainWindow.webContents.send ('controls:switchSound', 1);
+        },
+      },
+      {
+        label: 'Son 2',
+        accelerator: '4',
+        click () {
+          mainWindow.webContents.send ('controls:switchSound', 2);
+        },
+      },
+      {
+        label: 'Ajouter un objet bleu (10 pts)',
+        accelerator: 'Left',
+        click () {
+          mainWindow.webContents.send ('controls:addPoints', 10);
+        },
+      },
+      {
+        label: 'Ajouter un objet jaune (20 pts)',
+        accelerator: 'Down',
+        click () {
+          mainWindow.webContents.send ('controls:addPoints', 20);
+        },
+      },
+      {
+        label: 'Ajouter un objet rouge (30 pts)',
+        accelerator: 'Right',
+        click () {
+          mainWindow.webContents.send ('controls:addPoints', 30);
+        },
+      },
+      {
+        label: 'Ajouter un objet vert (50 pts)',
+        accelerator: 'Up',
+        click () {
+          mainWindow.webContents.send ('controls:addPoints', 50);
+        },
+      },
+      {
+        label: 'Ajouter un objet mystère (40 pts)',
+        accelerator: 'Enter',
+        click () {
+          mainWindow.webContents.send ('controls:addPoints', 40);
         },
       },
     ],

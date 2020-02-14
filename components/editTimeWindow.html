@@ -17,102 +17,54 @@
 			crossorigin="anonymous"
 		/>
 		<link rel="stylesheet" href="../assets/css/styles.css" />
-		<title>Modifier le temps</title>
+		<title>Modifier le cycle</title>
 	</head>
 	<body>
 		<main>
 			<div class="logoBox"></div>
 			<div class="titleBox">
 				<h1 class="title">
-					Modification du chronomètre
+					Modification du cycle
 				</h1>
 			</div>
 			<div class="chronoContainer">
 				<form class="edit-time-sequences">
-					<h1>Nombre de séquences de temps</h1>
+					<h1>Cycle</h1>
 					<div class="form-group">
-						<label for="time-input-1">1 séquence</label>
+						<label for="cycle">1</label>
 						<input
 							class="sequence-radio"
-							id="time-input-1"
+							id="cycle"
 							name="sequence"
 							type="radio"
 							value="1"
 						/>
-						<label for="time-input-2">2 séquences</label>
+						<label for="cycle">2</label>
 						<input
 							class="sequence-radio"
-							id="time-input-2"
+							id="cycle"
 							name="sequence"
 							type="radio"
 							value="2"
 							checked
 						/>
 					</div>
-				</form>
-
-				<form class="edit-time-form">
-					<div class="form-group single hidden">
-						<div>
-							<label for="timeEdit">Nouvelle durée</label>
-							<input id="time-input" class="time-input" type="text" autofocus />
-						</div>
-					</div>
-					<div class="form-group dual">
-						<div>
-							<label for="timeEdit">Durée 1</label>
-							<input id="time-input" class="time-input" type="text" autofocus />
-						</div>
-						<div>
-							<label for="timeEdit">Durée 2</label>
-							<input id="time-input" class="time-input" type="text" autofocus />
-						</div>
-					</div>
-
-					<button class="btn" type="submit">Modifier</button>
+					<button class="btn" type="submit">Enregistrer le choix</button>
 				</form>
 			</div>
 		</main>
 
 		<script>
 			const {ipcRenderer} = require("electron");
-			let sequenceAmount = "2";
-			const single = document.querySelector(".single");
-			const dual = document.querySelector(".dual");
 
 			const radioInputs = document.querySelectorAll(".sequence-radio");
 			const form = document.querySelector(".edit-time-form");
 
-			radioInputs.forEach(radio => {
-				radio.addEventListener("change", e => {
-					if (e.currentTarget.value === "1") {
-						dual.classList.add("hidden");
-						single.classList.remove("hidden");
-					}
-					if (e.currentTarget.value === "2") {
-						dual.classList.remove("hidden");
-						single.classList.add("hidden");
-					}
-					sequenceAmount = e.currentTarget.value;
-					form.reset();
-				});
-			});
-
 			form.addEventListener("submit", e => {
 				e.preventDefault();
-				const timeValues = {sequenceAmount, values: []};
-				let timeInputs = "";
-				if (sequenceAmount == "1") {
-					timeInputs = document.querySelectorAll(".single .time-input");
-				} else if (sequenceAmount == "2") {
-					timeInputs = document.querySelectorAll(".dual .time-input");
-				}
-
-				timeInputs.forEach((input, index) => {
-					timeValues.values[index] = input.value;
-				});
-				console.log(timeValues);
-				ipcRenderer.send("chrono:edit-time", timeValues);
+				const cycleRadio = document.querySelector("#cycle").value;
+				console.log(cycleRadio);
+				//ipcRenderer.send("chrono:edit-points", timeValues);
 			});
 		</script>
 		<script

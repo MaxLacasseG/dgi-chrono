@@ -17,7 +17,7 @@
 			crossorigin="anonymous"
 		/>
 		<link rel="stylesheet" href="../assets/css/styles.css" />
-		<title>Le chronomètre officiel du DGI</title>
+		<title>Pince moi ça!</title>
 		<style>
 			.titleBox {
 				-webkit-user-select: none;
@@ -28,25 +28,53 @@
 	<body>
 		<main>
 			<div class="logoBox"></div>
-			<div class="chienBg"></div>
 			<div class="titleBox">
 				<h1 class="title">
-					Le chronomètre officiel du défi
+					Pince-moi ça!
 				</h1>
+				<h2 id="cycleBox"></h2>
 			</div>
-			<div class="chronoContainer">
-				<div class="time">
-					<p></p>
+			<div class="main-container">
+				<div class="chronoContainer">
+					<div class="time">
+						<p></p>
+					</div>
+					<div class="controles">
+						<div class="controles-btn" id="ctrl-reset">
+							<i class="fas fa-history"></i>
+						</div>
+						<div class="controles-btn hide" id="ctrl-pause">
+							<i class="fas fa-pause-circle"></i>
+						</div>
+						<div class="controles-btn" id="ctrl-start">
+							<i class="fas fa-play-circle"></i>
+						</div>
+					</div>
 				</div>
-				<div class="controles">
-					<div class="controles-btn" id="ctrl-reset">
-						<i class="fas fa-history"></i>
+				<div class="pointsContainer">
+					<div class="points">
+						<p></p>
 					</div>
-					<div class="controles-btn hide" id="ctrl-pause">
-						<i class="fas fa-pause-circle"></i>
-					</div>
-					<div class="controles-btn" id="ctrl-start">
-						<i class="fas fa-play-circle"></i>
+					<div class="controles">
+						<div class="row">
+							<div class="controles-btn green" id="ctrl-green">
+								<i class="fas fa-arrow-up "></i>
+							</div>
+							<div class="controles-btn" id="ctrl-mystery">
+								<i class="fas fa-question"></i>
+							</div>
+						</div>
+						<div class="row">
+							<div class="controles-btn blue" id="ctrl-blue">
+								<i class="fas fa-arrow-left "></i>
+							</div>
+							<div class="controles-btn yellow" id="ctrl-yellow">
+								<i class="fas fa-arrow-down "></i>
+							</div>
+							<div class="controles-btn red" id="ctrl-red">
+								<i class="fas fa-arrow-right "></i>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -58,6 +86,7 @@
 			Chrono.initCounter();
 
 			//SAVE ELEMENTS
+
 			const timeBlock = document.querySelector(".time p");
 			const chronoContainer = document.querySelector(".chronoContainer");
 			const ctrls = document.querySelectorAll(".controles-btn");
@@ -65,6 +94,19 @@
 			const resetBtn = document.querySelector("#ctrl-reset");
 			const pauseBtn = document.querySelector("#ctrl-pause");
 
+			const pointsBlock = document.querySelector(".points p");
+			const greenBtn = document.querySelector("#ctrl-green");
+			const blueBtn = document.querySelector("#ctrl-blue");
+			const yellowBtn = document.querySelector("#ctrl-yellow");
+			const redBtn = document.querySelector("#ctrl-red");
+			const mysteryBtn = document.querySelector("#ctrl-mystery");
+
+			const switchCycle = cycle => {
+				console.log("Switch", cycle);
+
+				const cycleBox = document.querySelector("#cycleBox");
+				cycleBox.innerText = cycle === 1 ? "1er cycle" : "2e-3e cycle";
+			};
 			//ELEMENTS LISTENERS
 			startBtn.addEventListener("animationstart", e => {
 				startBtn.addEventListener("animationend", e => {
@@ -101,23 +143,81 @@
 			});
 
 			resetBtn.addEventListener("click", () => {
+				Chrono.resetCounter();
+				switchCycle(Chrono.state.cycle);
 				chronoContainer.classList.remove("animate");
 				resetBtn.classList.add("animate");
-				Chrono.resetCounter();
+
+				redBtn.classList.remove("hide");
+				blueBtn.classList.remove("hide");
+				yellowBtn.classList.remove("hide");
+				greenBtn.classList.remove("hide");
+				mysteryBtn.classList.remove("hide");
 			});
+
+			greenBtn.addEventListener("click", () => {
+				Chrono.addPoints(50);
+			});
+			blueBtn.addEventListener("click", () => {
+				Chrono.addPoints(10);
+			});
+			yellowBtn.addEventListener("click", () => {
+				Chrono.addPoints(20);
+			});
+			redBtn.addEventListener("click", () => {
+				Chrono.addPoints(30);
+			});
+			mysteryBtn.addEventListener("click", () => {
+				Chrono.addPoints(40);
+			});
+
+			var sound = function(src) {
+				this.sound = document.createElement("audio");
+				this.sound.src = src;
+				this.sound.setAttribute("preload", "auto");
+				this.sound.setAttribute("controls", "none");
+				this.sound.style.display = "none";
+				document.body.appendChild(this.sound);
+				this.play = function() {
+					this.sound.play();
+				};
+				this.stop = function() {
+					this.sound.pause();
+				};
+			};
 
 			//GLOBAL EVENTS
 			ipcRenderer.on("chrono:set-time", (e, time) => {
 				if (time <= 5) {
 					chronoContainer.classList.add("animate");
 				}
+				switchCycle(Chrono.state.cycle);
 				timeBlock.innerText = time + " s";
+			});
+			ipcRenderer.on("chrono:set-points", (e, points) => {
+				pointsBlock.innerText = points + " pts";
 			});
 			ipcRenderer.on("chrono:time-ended", (e, time) => {
 				startBtn.classList.remove("hide", "animate");
 				pauseBtn.classList.add("hide");
+				redBtn.classList.add("hide");
+				blueBtn.classList.add("hide");
+				yellowBtn.classList.add("hide");
+				greenBtn.classList.add("hide");
+				mysteryBtn.classList.add("hide");
 				chronoContainer.classList.remove("animate");
-				timeBlock.innerText = "TERMINÉ!";
+				timeBlock.innerText = "FIN";
+
+				var sound = document.createElement("audio");
+				sound.src =
+					Chrono.state.soundIndex === 1
+						? "../assets/audio/wouf.mp3"
+						: "../assets/audio/bateau.mp3";
+				sound.setAttribute("preload", "auto");
+				sound.setAttribute("controls", "none");
+				sound.style.display = "none";
+				document.body.appendChild(sound);
+				sound.play();
 			});
 
 			ipcRenderer.on("chrono:edit-time", (e, newTime) => {
@@ -128,6 +228,10 @@
 			});
 
 			ipcRenderer.on("controls:toggle", e => {
+				if (Chrono.state.timeEnded) {
+					resetBtn.click();
+					return;
+				}
 				if (!Chrono.state.isCounting) {
 					startBtn.click();
 				} else {
@@ -135,15 +239,25 @@
 				}
 			});
 
-			ipcRenderer.on("controls:switchIndex", (e, index) => {
-				if (index <= Chrono.state.duration.length) {
-					Chrono.setDurationIndex(index - 1);
-					chronoContainer.classList.remove("animate");
-				}
+			ipcRenderer.on("controls:switchCycle", (e, cycle) => {
+				switchCycle(cycle);
+				Chrono.setCycle(cycle);
+				chronoContainer.classList.remove("animate");
+			});
+
+			ipcRenderer.on("controls:switchSound", (e, soundIndex) => {
+				console.log(soundIndex);
+
+				Chrono.setSound(soundIndex);
 			});
 
 			ipcRenderer.on("controls:reset", (e, time) => {
+				switchCycle(Chrono.state.cycle);
 				resetBtn.click();
+			});
+
+			ipcRenderer.on("controls:addPoints", (e, points) => {
+				Chrono.addPoints(points);
 			});
 		</script>
 		<script
