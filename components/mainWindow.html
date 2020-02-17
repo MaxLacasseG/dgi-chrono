@@ -55,6 +55,9 @@
 					<div class="points">
 						<p></p>
 					</div>
+					<div class="endtime hide">
+						<p>Pointage final</p>
+					</div>
 					<div class="controles">
 						<div class="row">
 							<div class="controles-btn green" id="ctrl-green">
@@ -87,6 +90,7 @@
 
 			//SAVE ELEMENTS
 
+			const endtimeBlock = document.querySelector(".endtime");
 			const timeBlock = document.querySelector(".time p");
 			const chronoContainer = document.querySelector(".chronoContainer");
 			const ctrls = document.querySelectorAll(".controles-btn");
@@ -105,7 +109,7 @@
 				console.log("Switch", cycle);
 
 				const cycleBox = document.querySelector("#cycleBox");
-				cycleBox.innerText = cycle === 1 ? "1er cycle" : "2e-3e cycle";
+				cycleBox.innerText = cycle === 1 ? "1er cycle" : "2e et 3e cycle";
 			};
 			//ELEMENTS LISTENERS
 			startBtn.addEventListener("animationstart", e => {
@@ -144,6 +148,7 @@
 
 			resetBtn.addEventListener("click", () => {
 				Chrono.resetCounter();
+				endtimeBlock.classList.add("hide");
 				switchCycle(Chrono.state.cycle);
 				chronoContainer.classList.remove("animate");
 				resetBtn.classList.add("animate");
@@ -198,6 +203,7 @@
 				pointsBlock.innerText = points + " pts";
 			});
 			ipcRenderer.on("chrono:time-ended", (e, time) => {
+				endtimeBlock.classList.remove("hide");
 				startBtn.classList.remove("hide", "animate");
 				pauseBtn.classList.add("hide");
 				redBtn.classList.add("hide");
@@ -206,7 +212,6 @@
 				greenBtn.classList.add("hide");
 				mysteryBtn.classList.add("hide");
 				chronoContainer.classList.remove("animate");
-				timeBlock.innerText = "FIN";
 
 				var sound = document.createElement("audio");
 				sound.src =

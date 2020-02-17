@@ -190,11 +190,14 @@ main {
         font-size: 3rem;
         padding: 0;
       }
+
       @media screen and (max-width: 1200px) {
         font-size: 2rem;
         padding: 0;
       }
     }
+
+
   }
 
   .logoBox {
@@ -202,10 +205,8 @@ main {
     height: 100%;
     position: fixed;
     top: 0;
-    background: linear-gradient(
-        rgba(30, 112, 156, 0.769),
-        rgba(34, 103, 140, 0.701)
-      ),
+    background: linear-gradient(rgba(30, 112, 156, 0.769),
+        rgba(34, 103, 140, 0.701)),
       url('../images/logo.png'),
       linear-gradient(rgba(30, 112, 156, 0.591), rgba(34, 103, 140, 0.516));
     background-repeat: no-repeat, no-repeat;
@@ -231,29 +232,32 @@ main {
     flex: 1 1 50%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: stretch;
 
     &.animate {
-      animation: bgRed 500ms cubic-bezier(0.66, 0.07, 0.23, 0.92) infinite
-        alternate both;
+      animation: bgRed 500ms cubic-bezier(0.66, 0.07, 0.23, 0.92) infinite alternate both;
     }
 
     .time {
       align-self: center;
-      font-size: 25rem;
+      font-size: 20rem;
       color: white;
       text-shadow: 3px 3px 2px $mainColor, 3px 3px darken($mainColor, 3%),
         4px 4px darken($mainColor, 6%), 6px 6px darken($mainColor, 10%),
         8px 8px 10px darken($mainColor, 13%);
       font-family: $mainFont;
+
       @media screen and (max-width: 1500px) {
         font-size: 15rem;
       }
+
       @media screen and (max-width: 1200px) {
         font-size: 10rem;
       }
     }
+
+
 
     .controles {
       padding-top: 2em;
@@ -262,12 +266,15 @@ main {
       align-items: center;
 
       transform: translate(0, -100px);
+
       @media screen and (max-width: 1500px) {
         margin-top: 2rem;
       }
+
       @media screen and (max-width: 1200px) {
         margin-top: 5rem;
       }
+
       .controles-btn {
         background-color: $secondaryColor;
         border-radius: 100%;
@@ -303,9 +310,11 @@ main {
           color: white;
           text-shadow: 2px 2px 2px $mainColorTrans, 3px 3px 5px $mainColorTrans;
           font-size: 10rem;
+
           @media screen and (max-width: 1500px) {
             font-size: 8rem;
           }
+
           @media screen and (max-width: 1200px) {
             font-size: 5rem;
           }
@@ -318,7 +327,7 @@ main {
     flex: 1 1 50%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: stretch;
 
     .points {
@@ -330,11 +339,33 @@ main {
         4px 4px darken($mainColor, 6%), 6px 6px darken($mainColor, 10%),
         8px 8px 10px darken($mainColor, 13%);
       font-family: $mainFont;
+
       @media screen and (max-width: 1500px) {
         font-size: 15rem;
       }
+
       @media screen and (max-width: 1200px) {
         font-size: 10rem;
+      }
+    }
+
+    .endtime {
+      text-align: center;
+      padding: 0;
+      margin-top: -5rem;
+      font-size: 5rem;
+      color: rgb(255, 0, 0);
+      text-shadow: 3px 3px 2px $mainColor, 3px 3px darken($mainColor, 3%),
+        4px 4px darken($mainColor, 6%), 6px 6px darken($mainColor, 10%),
+        8px 8px 10px darken($mainColor, 13%);
+      font-family: $mainFont;
+
+      @media screen and (max-width: 1500px) {
+        font-size: 5rem;
+      }
+
+      @media screen and (max-width: 1200px) {
+        font-size: 5rem;
       }
     }
 
@@ -346,12 +377,15 @@ main {
       align-items: center;
 
       transform: translate(0, -100px);
+
       @media screen and (max-width: 1500px) {
         margin-top: 2em;
       }
+
       @media screen and (max-width: 1200px) {
         margin-top: 3em;
       }
+
       .row {
         display: flex;
       }
@@ -384,9 +418,11 @@ main {
           color: white;
           text-shadow: 2px 2px 2px $mainColorTrans, 3px 3px 5px $mainColorTrans;
           font-size: 5rem;
+
           @media screen and (max-width: 1500px) {
             font-size: 4rem;
           }
+
           @media screen and (max-width: 1200px) {
             font-size: 3rem;
           }
@@ -394,10 +430,12 @@ main {
 
         &.green {
           background-color: #68d743;
+
           &:hover {
             background-color: white;
             color: #68d743;
             box-shadow: 2px 2px 8px #68d743;
+
             & i {
               color: #68d743;
               text-shadow: 2px 2px 2px $mainColorTrans,
@@ -405,12 +443,15 @@ main {
             }
           }
         }
+
         &.blue {
           background-color: #23b6f5;
+
           &:hover {
             background-color: white;
             color: #23b6f5;
             box-shadow: 2px 2px 8px #23b6f5;
+
             & i {
               color: #23b6f5;
               text-shadow: 2px 2px 2px $mainColorTrans,
@@ -418,12 +459,15 @@ main {
             }
           }
         }
+
         &.yellow {
           background-color: #ded71a;
+
           &:hover {
             background-color: white;
             color: #ded71a;
             box-shadow: 2px 2px 8px #ded71a;
+
             & i {
               color: #ded71a;
               text-shadow: 2px 2px 2px $mainColorTrans,
@@ -431,8 +475,10 @@ main {
             }
           }
         }
+
         &.red {
           background-color: #ed4441;
+
           &:hover {
             background-color: white;
             color: #ed4441;
@@ -456,6 +502,11 @@ main {
       }
     }
   }
+
+  .hide {
+    display: none;
+  }
+
   .main-container {
     display: flex;
   }

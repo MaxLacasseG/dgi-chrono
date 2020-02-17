@@ -117,14 +117,14 @@ const mainMenuTemplate = [
         },
       },
       {
-        label: 'Cycle 1',
+        label: '1er cycle',
         accelerator: '1',
         click () {
           mainWindow.webContents.send ('controls:switchCycle', 1);
         },
       },
       {
-        label: 'Cycle 2',
+        label: '2e et 3e cycle',
         accelerator: '2',
         click () {
           mainWindow.webContents.send ('controls:switchCycle', 2);

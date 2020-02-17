@@ -359,9 +359,9 @@ main .chronoContainer {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   -webkit-box-align: stretch;
       -ms-flex-align: stretch;
           align-items: stretch;
@@ -376,7 +376,7 @@ main .chronoContainer .time {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
-  font-size: 25rem;
+  font-size: 20rem;
   color: white;
   text-shadow: 3px 3px 2px #1e6f9c, 3px 3px #1c668f, 4px 4px #195d82, 6px 6px #165171, 8px 8px 10px #134764;
   font-family: "cafeteria";
@@ -494,9 +494,9 @@ main .pointsContainer {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   -webkit-box-align: stretch;
       -ms-flex-align: stretch;
           align-items: stretch;
@@ -522,6 +522,28 @@ main .pointsContainer .points {
 @media screen and (max-width: 1200px) {
   main .pointsContainer .points {
     font-size: 10rem;
+  }
+}
+
+main .pointsContainer .endtime {
+  text-align: center;
+  padding: 0;
+  margin-top: -5rem;
+  font-size: 5rem;
+  color: red;
+  text-shadow: 3px 3px 2px #1e6f9c, 3px 3px #1c668f, 4px 4px #195d82, 6px 6px #165171, 8px 8px 10px #134764;
+  font-family: "cafeteria";
+}
+
+@media screen and (max-width: 1500px) {
+  main .pointsContainer .endtime {
+    font-size: 5rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  main .pointsContainer .endtime {
+    font-size: 5rem;
   }
 }
 
@@ -687,6 +709,10 @@ main .pointsContainer .controles .controles-btn.hide {
 main .pointsContainer .controles .controles-btn.animate {
   -webkit-animation: btnAnimation 300ms 0s ease-in-out backwards;
           animation: btnAnimation 300ms 0s ease-in-out backwards;
+}
+
+main .hide {
+  display: none;
 }
 
 main .main-container {
